@@ -37,6 +37,20 @@ export interface AgentMemoryStore {
   knowledge: Map<string, unknown>
 }
 
+export interface AgentMemoryService {
+  storeShortTerm(agentId: string, key: string, value: unknown): void
+  getShortTerm(agentId: string, key: string): unknown | undefined
+  storeLongTerm(agentId: string, key: string, value: unknown): void
+  getLongTerm(agentId: string, key: string): unknown | undefined
+  storeKnowledge(agentId: string, key: string, value: unknown): void
+  getKnowledge(agentId: string, key: string): unknown | undefined
+  recordTask(agentId: string, task: AgentTaskRecord): void
+  getTaskHistory(agentId: string): AgentTaskRecord[]
+  getStats(agentId: string): { shortTermSize: number; longTermSize: number; taskCount: number; knowledgeSize: number }
+  clearShortTerm(agentId: string): void
+  clearAgentMemory(agentId: string): void
+}
+
 export interface AgentTaskRecord {
   id: string
   type: string
@@ -74,7 +88,7 @@ export interface AgentDefinition {
   status: AgentStatus
   permissions: AgentPermission[]
   capabilities: AgentCapability[]
-  memory: AgentMemoryStore
+  memory: AgentMemoryService
   tasks: AgentTaskRecord[]
   health: AgentHealthScore
   metrics: AgentMetrics

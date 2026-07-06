@@ -1,6 +1,6 @@
-import type { AgentMemoryStore, AgentTaskRecord } from './types'
+import type { AgentMemoryStore, AgentMemoryService, AgentTaskRecord } from './types'
 
-export class AgentMemory {
+export class AgentMemory implements AgentMemoryService {
   private stores = new Map<string, AgentMemoryStore>()
 
   private getStore(agentId: string): AgentMemoryStore {
