@@ -1,0 +1,42 @@
+{
+  "name": "ugc-affiliate-agency",
+  "version": "1.0.0",
+  "private": true,
+  "description": "UGC Affiliate Agency — Performance-driven UGC content production & creator management platform.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^4.0.8",
+    "@hookform/resolvers": "^4.0.0",
+    "@tanstack/react-query": "^5.0.0",
+    "ai": "^7.0.15",
+    "better-auth": "^1.6.23",
+    "clsx": "^2.1.0",
+    "drizzle-orm": "^0.45.2",
+    "lucide-react": "^0.400.0",
+    "next": "15.5.20",
+    "pg": "^8.22.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-hook-form": "^7.0.0",
+    "zod": "^3.23.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/pg": "^8.20.0",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwindcss": "^3.4.15",
+    "typescript": "latest"
+  }
+}

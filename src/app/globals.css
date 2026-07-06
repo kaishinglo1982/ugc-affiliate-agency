@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: #080808;
+  color: #f4f0e8;
+}
+
+@layer components {
+  .card {
+    @apply rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-300;
+  }
+
+  .card:hover {
+    @apply border-white/20 bg-white/[0.05];
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full bg-bone px-6 py-3 text-sm font-semibold uppercase tracking-widest text-ink transition-colors duration-200 hover:bg-white;
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-widest text-bone transition-colors duration-200 hover:border-white/40 hover:bg-white/10;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center rounded-full bg-gold px-6 py-3 text-sm font-semibold uppercase tracking-widest text-ink transition-colors duration-200 hover:bg-gold/90;
+  }
+
+  .label {
+    @apply font-mono text-xs uppercase tracking-[0.35em] text-gold;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.35em] text-bone/50;
+  }
+}
+
+@layer utilities {
+  .grain {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
+    background-size: 4px 4px;
+  }
+}
