@@ -27,7 +27,7 @@ export type AgentCapability =
 
 export interface AgentPermission {
   resource: string
-  actions: ('read' | 'write' | 'execute' | 'admin')[]
+  actions: ('read' | 'write' | 'execute' | 'admin' | '*')[]
 }
 
 export interface AgentMemoryStore {
