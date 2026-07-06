@@ -168,5 +168,5 @@ function determineAgentForMessage(message: string): ReturnType<typeof agentRegis
     return agentRegistry.get('ceo-agent')
   }
 
-  return null
+  return undefined
 }
