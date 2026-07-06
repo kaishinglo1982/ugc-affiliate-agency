@@ -89,7 +89,7 @@ export interface AgentDefinition {
   permissions: AgentPermission[]
   capabilities: AgentCapability[]
   memory: AgentMemoryService
-  tasks: AgentTaskRecord[]
+  tasks: AgentTask[]
   health: AgentHealthScore
   metrics: AgentMetrics
   metadata?: Record<string, unknown>
