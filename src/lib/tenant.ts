@@ -65,7 +65,7 @@ export async function requireTenantContext(
 ): Promise<TenantContext> {
   const context = await getTenantContext()
 
-  if (!context) redirect('/sign-in?reason=tenant-required')
+  if (!context) redirect('/onboarding/organization')
   if (!allowedRoles.includes(context.role)) redirect('/unauthorized')
 
   return context
