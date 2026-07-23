@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, serial, varchar, integer, numeric } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, boolean, serial, varchar, integer, numeric, index, uniqueIndex } from 'drizzle-orm/pg-core'
 
 // --- Better Auth required tables -------------------------------------------
 // Column names are camelCase to match Better Auth's defaults. Do not rename.
@@ -24,7 +24,11 @@ export const session = pgTable('session', {
   userId: text('userId')
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' }),
-})
+  activeOrganizationId: text('activeOrganizationId'),
+}, (table) => ({
+  userIdIdx: index('session_user_id_idx').on(table.userId),
+  activeOrganizationIdx: index('session_active_organization_idx').on(table.activeOrganizationId),
+}))
 
 export const account = pgTable('account', {
   id: text('id').primaryKey(),
@@ -52,6 +56,52 @@ export const verification = pgTable('verification', {
   createdAt: timestamp('createdAt').defaultNow(),
   updatedAt: timestamp('updatedAt').defaultNow(),
 })
+
+// --- Multi-tenant organization tables -------------------------------------
+
+export const organizations = pgTable('organization', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  slug: text('slug').notNull(),
+  logo: text('logo'),
+  metadata: text('metadata'),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+}, (table) => ({
+  slugUnique: uniqueIndex('organization_slug_unique').on(table.slug),
+}))
+
+export const members = pgTable('member', {
+  id: text('id').primaryKey(),
+  organizationId: text('organizationId')
+    .notNull()
+    .references(() => organizations.id, { onDelete: 'cascade' }),
+  userId: text('userId')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  role: text('role').notNull().default('member'),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+}, (table) => ({
+  organizationIdx: index('member_organization_id_idx').on(table.organizationId),
+  userIdx: index('member_user_id_idx').on(table.userId),
+  organizationUserUnique: uniqueIndex('member_organization_user_unique').on(table.organizationId, table.userId),
+}))
+
+export const invitations = pgTable('invitation', {
+  id: text('id').primaryKey(),
+  organizationId: text('organizationId')
+    .notNull()
+    .references(() => organizations.id, { onDelete: 'cascade' }),
+  email: text('email').notNull(),
+  role: text('role'),
+  status: text('status').notNull().default('pending'),
+  expiresAt: timestamp('expiresAt').notNull(),
+  inviterId: text('inviterId')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+}, (table) => ({
+  organizationIdx: index('invitation_organization_id_idx').on(table.organizationId),
+  emailIdx: index('invitation_email_idx').on(table.email),
+}))
 
 // --- App tables ------------------------------------------------------------
 
